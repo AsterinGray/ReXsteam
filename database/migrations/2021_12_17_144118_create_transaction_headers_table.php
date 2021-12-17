@@ -23,7 +23,7 @@ class CreateTransactionHeadersTable extends Migration
             $table->integer('expired_month');
             $table->integer('expired_year');
             $table->integer('cvc');
-            $table->integer('postal_code');
+            $table->string('postal_code');
             $table->string('checkout_status');
             $table->double('total_price');
             $table->timestamps();

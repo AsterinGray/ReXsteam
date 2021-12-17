@@ -14,7 +14,8 @@ class TransactionDetailFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'transaction_id' => $this->faker->numberBetween(1, 10),
+            'game_id' => $this->faker->numberBetween(1, 10),
         ];
     }
 }
