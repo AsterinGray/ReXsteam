@@ -21,8 +21,14 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title text-center">Profile</div>
-                <form action={{route('profile.update')}} method="POST">
+                <form action={{route('profile.update')}} method="POST" enctype="multipart/form-data">
                     @csrf
+                    <div class="mb-3">
+                        <label for="profile_image" class="form-label">
+                            <img style="width: 8rem" src="{{ asset("storage/images")."/".$user->profile_image}}" alt="">
+                        </label>
+                        <input type="file" name="profile_image" id="username" value="{{$user->profile_image}}" class="form-control" readonly>
+                    </div>                    
                     <div class="d-flex">
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>

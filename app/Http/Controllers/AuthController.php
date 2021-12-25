@@ -70,6 +70,13 @@ class AuthController extends Controller
         $isValid = Auth::check($request->password, $user->password);
         if(!$isValid) redirect()->route('edit')->with('failed','Failed Update Profile');
 
+
+        if($request->profile_image) {
+            $profile_image = $request->file('profile_image')->getClientOriginalName();
+            $path = $request->file('profile_image')->storeAs('public/images', $profile_image);
+            $data["profile_image"] = $profile_image;
+        }
+        
         $user->update($data);
         
         return redirect()->back()->withSuccess("Profile Updated Successfully");
