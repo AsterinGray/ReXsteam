@@ -22,7 +22,7 @@ class AuthController extends Controller
 
         $remember_me = $request->has('remember_me');
         $isAuth = Auth::attempt($credentials, $remember_me);
-        
+
         if($isAuth) return redirect()->route('index');
         return redirect()->route('login')->withErrors("Credential doesn't match record");
     }

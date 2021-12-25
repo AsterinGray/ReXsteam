@@ -21,8 +21,8 @@ Route::post('/register', [AuthController::class, 'registerAction'])->name('regis
 
 Route::middleware('auth')->group(function() {
     Route::view('/', 'index')->name('index');
-        
-    Route::get('/profile', [AuthController::class, 'edit'])->name('profile');
+    
+    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
     Route::post('/profile', [AuthController::class, 'update'])->name('profile.update');
 });
 

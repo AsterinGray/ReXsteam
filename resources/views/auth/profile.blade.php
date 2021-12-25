@@ -3,17 +3,55 @@
 @section('title', 'Profile')
 
 @section('content')
-    @if (Session::get('success'))
-        {{Session::get('success')}}
-    @endif
-    <form action={{route('profile.update')}} method="POST">
-        @csrf
-        <input type="text" name="username" value="{{$user->username}}" readonly>
-        <input type="text" name="level" value="{{$user->level}}" readonly>
-        <input type="text" name="full_name" value="{{$user->full_name}}">
-        <input type="password" name="current_password">
-        <input type="password" name="password" id="">
-        <input type="password" name="password_confirmation" id="">
-        <button type="submit">Submit</button>
-    </form>
+    <div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
+        @if (Session::get('success'))
+            <div class="alert alert-success">
+                {{Session::get('success')}}
+            </div>
+        @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title text-center">Profile</div>
+                <form action={{route('profile.update')}} method="POST">
+                    @csrf
+                    <div class="d-flex">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" id="username" value="{{$user->username}}" class="form-control" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="level" class="form-label">Level</label>
+                            <input type="text" name="level" id="level" value="{{$user->level}}" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="full_name" class="form-label">Full Name</label>
+                        <input type="text" name="full_name" id="full_name" value="{{$user->full_name}}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input type="password" name="current_password" id="current_password" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">New Password</label>
+                        <input type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password_confirmation" class="form-label">New Password Confirmation</label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
 @endsection
