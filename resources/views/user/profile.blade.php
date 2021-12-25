@@ -20,9 +20,10 @@
         @endif
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title text-center">Profile</div>
+                <h5 class="card-title text-center">Profile</h5>
                 <form action={{route('profile.update')}} method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PATCH')
                     <div class="mb-3">
                         <label for="profile_image" class="form-label">
                             <img style="width: 8rem" src="{{ asset("storage/images")."/".$user->profile_image}}" alt="">

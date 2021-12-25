@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,15 @@ Route::post('/register', [AuthController::class, 'registerAction'])->name('regis
 Route::middleware('auth')->group(function() {
     Route::view('/', 'index')->name('index');
     
-    Route::get('/profile', [AuthController::class, 'profile'])->name('profile');
-    Route::post('/profile', [AuthController::class, 'update'])->name('profile.update');
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
+
+    Route::view('/check-age', 'user.checkage')->name('checkAge');
+    Route::patch('/check-age', [UserController::class, 'checkAge'])->name('checkAge.action');
+    Route::post('/check-age', [UserController::class, 'cancelCheckAge'])->name('checkAge.cancel');
+
+    Route::middleware('checkage')->group(function() {    
+        Route::view('/game-detail', 'game.index')->name('game.index');
+    });
 });
 
