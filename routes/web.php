@@ -14,16 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'loginAction'])->name('login.action');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'registerAction'])->name('register.action');
+
+Route::middleware('auth')->group(function() {
+    Route::view('/', 'index')->name('index');
+        
+    Route::get('/profile', [AuthController::class, 'edit'])->name('profile');
+    Route::post('/profile', [AuthController::class, 'update'])->name('profile.update');
 });
 
-Route::view('/index', 'index')->name('index');
-
-Route::view('/login', 'auth.login')->name('login');
-Route::view('/register', 'auth.register')->name('register');
-Route::get('/profile', [AuthController::class, 'edit'])->name('edit');
-
-Route::post('/login', [AuthController::class, 'login'])->name('login.action');
-Route::post('/register', [AuthController::class, 'register'])->name('register.action');
-Route::post('/profile', [AuthController::class, 'update'])->name('profile.update');

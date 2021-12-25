@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request) {
+    public function login() {
+        if(Auth::check()) return redirect()->route('index');
+        return view('auth.login');
+    }
+
+    public function loginAction(Request $request) {
         $credentials = $request->validate([
             'username' => 'required|exists:users,username',
             'password' => 'required',
@@ -19,10 +24,15 @@ class AuthController extends Controller
         $isAuth = Auth::attempt($credentials, $remember_me);
         
         if($isAuth) return redirect()->route('index');
-        return redirect()->route('login');
+        return redirect()->route('login')->withErrors("Credential doesn't match record");
     }
 
-    public function register(Request $request) {
+    public function register() {
+        if(Auth::check()) return redirect()->route('index');
+        return view('auth.register');
+    }
+
+    public function registerAction(Request $request) {
         $data = $request->validate([
             'username' => 'required|string|unique:users,username|min:6',
             'full_name' => 'required|string',
@@ -31,7 +41,7 @@ class AuthController extends Controller
         ]);
         $data['password'] = Hash::make($request->password);
         User::create($data);
-        return redirect()->route('login');
+        return redirect()->route('login')->withSuccess('Account Registered');
     }
 
     public function logout() {
@@ -39,9 +49,8 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    public function edit() {
+    public function profile() {
         $user = Auth::user();
-        $user->password;
         return view('auth.profile', compact('user'));
     }
 
@@ -63,6 +72,6 @@ class AuthController extends Controller
 
         $user->update($data);
         
-        return redirect()->back()->with("success", "Profile Updated Successfully");
+        return redirect()->back()->withSuccess("Profile Updated Successfully");
     }
 }
