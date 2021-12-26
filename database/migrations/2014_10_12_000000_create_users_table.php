@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('username');
             $table->string('full_name');
-            $table->integer('age');
             $table->string('profile_image')->default('https://www.seekpng.com/png/detail/41-410093_circled-user-icon-user-profile-icon-png.png')->nullable();
             $table->string('password');
             $table->integer('level')->default(0)->nullable();

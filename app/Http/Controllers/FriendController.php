@@ -6,6 +6,7 @@ use App\Models\Friend;
 use App\Http\Requests\StoreFriendRequest;
 use App\Http\Requests\UpdateFriendRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
@@ -18,7 +19,7 @@ class FriendController extends Controller
      */
     public function index()
     {
-        $user_id = 5;
+        $user_id = Auth::user()->id;
         $incoming_friend = Friend::where('status', 'incoming')->where('user_id', $user_id)->get();
         $pending_friend = Friend::where('status', 'pending')->where('user_id', $user_id)->get();
         $friend = Friend::where('status', 'friend')->where('user_id', $user_id)->get();
@@ -43,12 +44,13 @@ class FriendController extends Controller
      */
     public function store(StoreFriendRequest $request)
     {
-        $user_id = 5;
+        $user_id = Auth::user()->id;
         $user = User::where('username', $request['username'])->first();
         $errors = new MessageBag();
         if($user !== null) {
-            if(Friend::where('user_id', $user_id)->where('friend_id', $user->id)->exists())
+            if(Friend::where('user_id', $user_id)->where('friend_id', $user->id)->exists() && $user_id != $user->id)
                 $errors->add('username', 'User with username ' . $request['username'] . ' is already on your friend request/list');
+            else if($user_id == $user->id) $errors->add('username', 'You can\'t add yourself');
             else {
                 $friend_request = new Friend;
                 $friend_request->fill([
@@ -58,7 +60,7 @@ class FriendController extends Controller
                 ]);
                 $friend_request->save();
             }
-        } else $errors->add('username', 'User with username' . $request['username'] . ' doesnt exist');
+        } else $errors->add('username', 'User with username ' . $request['username'] . ' doesnt exist');
         return redirect()->back()->withErrors($errors);
     }
 

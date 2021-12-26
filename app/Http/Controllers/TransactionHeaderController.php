@@ -9,6 +9,7 @@ use App\Models\Game;
 use App\Models\TransactionDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionHeaderController extends Controller
 {
@@ -19,8 +20,7 @@ class TransactionHeaderController extends Controller
      */
     public function index()
     {
-        //$user_id = Auth::user()->id;
-        $user_id = 5;
+        $user_id = Auth::user()->id;
         $transaction = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'cart')->first();
         $detail = $transaction->detail;
         $games = $detail->map(function($item) {
@@ -57,7 +57,7 @@ class TransactionHeaderController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = 5;
+        $user_id = Auth::user()->id;
 
         $messages = [
             'card_number.numeric' => 'Card number must be in \'0000 0000 0000 0000\' format',
@@ -126,7 +126,7 @@ class TransactionHeaderController extends Controller
      */
     public function show(TransactionHeader $transactionHeader)
     {
-        $user_id = 5;
+        $user_id = Auth::user()->id;
         $transactions = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'completed')->get();
 
         return view('transaction.transaction_history', compact('transactions'));

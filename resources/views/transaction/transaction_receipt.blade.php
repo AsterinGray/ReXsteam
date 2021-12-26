@@ -21,5 +21,6 @@
         </tbody>
     </table>
     <p class="p-1">Total Price: <strong>Rp. {{$transaction->total_price}}</strong></p>
+    <a href="/"><button type="button" class="btn btn-secondary">Back to Home</button></a>
 </div>
 @endsection

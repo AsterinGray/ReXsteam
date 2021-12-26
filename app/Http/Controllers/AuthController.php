@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TransactionHeader;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +41,12 @@ class AuthController extends Controller
             'role' => 'required|string|in:member,admin',
         ]);
         $data['password'] = Hash::make($request->password);
-        User::create($data);
+        $user = User::create($data);
+
+        $transactionHeader = new TransactionHeader;
+        $transactionHeader->user_id = $user->id;
+        $transactionHeader->save();
+
         return redirect()->route('login')->withSuccess('Account Registered');
     }
 

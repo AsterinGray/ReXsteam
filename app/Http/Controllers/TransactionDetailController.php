@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTransactionDetailRequest;
 use App\Http\Requests\UpdateTransactionDetailRequest;
 use App\Models\Game;
 use App\Models\TransactionHeader;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionDetailController extends Controller
 {
@@ -17,7 +18,7 @@ class TransactionDetailController extends Controller
      */
     public function index()
     {
-        $user_id = 5;
+        $user_id = Auth::user()->id;
         $transaction = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'cart')->first();
         $detail = $transaction->detail;
         $games = $detail->map(function($item) {
@@ -89,7 +90,7 @@ class TransactionDetailController extends Controller
      */
     public function destroy($id)
     {
-        $user_id = 5;
+        $user_id = Auth::user()->id;
         $transaction = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'cart')->first();
         TransactionDetail::where('game_id', $id)->where('transaction_id', $transaction->id)->delete();
         return redirect()->back();

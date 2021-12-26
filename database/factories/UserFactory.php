@@ -17,7 +17,6 @@ class UserFactory extends Factory
         return [
             'username' => $this->faker->userName,
             'full_name' => $this->faker->name,
-            'age' => $this->faker->numberBetween(12, 50),
             'password' => 'password',
             'level' => $this->faker->numberBetween(0, 10),
             'role' => $this->faker->randomElement(['member', 'admin']),
