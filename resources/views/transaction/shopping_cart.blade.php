@@ -1,4 +1,5 @@
-@extends('layout')
+@extends('layout.main')
+@section('title', 'Shopping Cart')
 @section('content')
 <script>
     $('#delete-modal').modal();

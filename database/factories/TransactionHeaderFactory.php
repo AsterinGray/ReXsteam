@@ -22,7 +22,7 @@ class TransactionHeaderFactory extends Factory
             'expired_year' => $this->faker->year(),
             'cvc' => $this->faker->numberBetween(100, 9999),
             'postal_code' => $this->faker->postcode(),
-            'checkout_status' => $this->faker->randomElement(["cart", "pending", "completed"]),
+            'checkout_status' => $this->faker->randomElement(["cart", "completed"]),
             'total_price' => $this->faker->numberBetween(1, 100000)
         ];
     }

@@ -27,7 +27,7 @@ class TransactionHeaderController extends Controller
             return Game::where('id', $item->game_id)->first();
         });
         $total_price = $games->sum('price');
-        return view('transaction_information_page', compact('total_price'));
+        return view('transaction.transaction_information', compact('total_price'));
     }
 
     public function receipt($transactionId) {
@@ -36,7 +36,7 @@ class TransactionHeaderController extends Controller
         $games = $detail->map(function($item) {
             return Game::where('id', $item->game_id)->first();
         });
-        return view('transaction_receipt_page', compact('transaction', 'games'));
+        return view('transaction.transaction_receipt', compact('transaction', 'games'));
     }
 
     /**
@@ -129,7 +129,7 @@ class TransactionHeaderController extends Controller
         $user_id = 5;
         $transactions = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'completed')->get();
 
-        return view('transaction_history_page', compact('transactions'));
+        return view('transaction.transaction_history', compact('transactions'));
     }
 
     /**

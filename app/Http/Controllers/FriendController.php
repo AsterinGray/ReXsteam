@@ -22,7 +22,7 @@ class FriendController extends Controller
         $incoming_friend = Friend::where('status', 'incoming')->where('user_id', $user_id)->get();
         $pending_friend = Friend::where('status', 'pending')->where('user_id', $user_id)->get();
         $friend = Friend::where('status', 'friend')->where('user_id', $user_id)->get();
-        return view('friend_page', compact('incoming_friend', 'pending_friend', 'friend'));
+        return view('user.friend', compact('incoming_friend', 'pending_friend', 'friend'));
     }
 
     /**

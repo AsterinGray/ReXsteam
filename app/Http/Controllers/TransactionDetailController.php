@@ -23,7 +23,7 @@ class TransactionDetailController extends Controller
         $games = $detail->map(function($item) {
             return Game::where('id', $item->game_id)->first();
         });
-        return view('shopping_cart_page', compact('games'));
+        return view('transaction.shopping_cart', compact('games'));
     }
 
     /**
