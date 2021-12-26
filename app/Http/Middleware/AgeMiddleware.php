@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AgeMiddleware
 {
@@ -17,9 +17,13 @@ class AgeMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $user = Auth::user();
+        $url = $request->url();
+        $request->session()->put('game-detail', $url);
+        if(! $request->session()->has('age')) return redirect()->route('age');
+        
+        $age = $request->session()->pull('age');
+        if($age < 17) return redirect()->route('index')->withErrors("You need to be at least 17 to access this page");
 
-        if(!$user->birth_date) return redirect()->route('checkAge');
         return $next($request);
     }
 }

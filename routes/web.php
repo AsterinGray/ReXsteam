@@ -20,18 +20,20 @@ Route::post('/login', [AuthController::class, 'loginAction'])->name('login.actio
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerAction'])->name('register.action');
 
+Route::middleware('age')->group(function() {    
+    Route::view('/game/{id}', 'game.index')->name('game.index');
+});
+
+Route::view('/age', 'user.age')->name('age');
+Route::patch('/age', [UserController::class, 'checkAge'])->name('age.action');
+Route::post('/age', [UserController::class, 'cancelCheckAge'])->name('age.cancel');
+
 Route::middleware('auth')->group(function() {
     Route::view('/', 'index')->name('index');
     
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
 
-    Route::view('/check-age', 'user.checkage')->name('checkAge');
-    Route::patch('/check-age', [UserController::class, 'checkAge'])->name('checkAge.action');
-    Route::post('/check-age', [UserController::class, 'cancelCheckAge'])->name('checkAge.cancel');
 
-    Route::middleware('checkage')->group(function() {    
-        Route::view('/game-detail', 'game.index')->name('game.index');
-    });
 });
 

@@ -16,7 +16,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title text-center">CONTENT IN THIS PAGE MAY NOT BE APPROPRIATE FOR ALL AGES <br> AND MAY NOT BE SAFE FOR WORK</h5>
-                <form action={{route('checkAge')}} method="POST">
+                <form action={{route('age')}} method="POST">
                     @csrf
                     @method('PATCH')
                     <div class="mb-3">
@@ -27,7 +27,7 @@
                         </div>
                     </div>
                 </form>
-                <form action={{route('checkAge.cancel')}} method="POST">
+                <form action={{route('age.cancel')}} method="POST">
                     @csrf
                     <button class="btn btn-secondary" type="submit">Cancel</button>
                 </form>
