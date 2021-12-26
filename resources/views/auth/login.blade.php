@@ -26,7 +26,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" name="username" id="username" class="form-control">
+                        <input type="text" name="username" id="username" class="form-control" value="{{Cookie::get('rexsteam')}}">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
-                        <label class="form-check-label" for="remember_me">Remember Me</label>
+                        <label class="form-check-label" for="remember_me" checked="{{Cookie::get('rexsteam')}}">Remember Me</label>
                     </div>
                     
                     <div><a href={{route('register')}}>Don't have an account?</a></div>

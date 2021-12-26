@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
@@ -22,6 +23,8 @@ class AuthController extends Controller
 
         $remember_me = $request->has('remember_me');
         $isAuth = Auth::attempt($credentials, $remember_me);
+
+        if($remember_me) Cookie::queue('rexsteam', $request->username, 120);
 
         if($isAuth) return redirect()->route('index');
         return redirect()->route('login')->withErrors("Credential doesn't match record");
