@@ -1,1 +1,1 @@
-GAME DETAIL
+Game Detail
