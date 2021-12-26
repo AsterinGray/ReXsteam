@@ -1,28 +1,6 @@
 @extends('layout.main')
 @section('title', 'Shopping Cart')
 @section('content')
-<script>
-    $('#delete-modal').modal();
-    $(document).ready(function() {
-        $(document).on('click', "#delete-cart", function() {
-            $(this).addClass('delete-cart-trigger-clicked');
-
-            var options = {
-                'backdrop': 'static'
-            };
-            $('#delete-modal').modal(options)
-        })
-
-        $('#delete-modal').on('show.bs.modal', function() {
-            var el = $(".delete-cart-trigger-clicked");
-            var row = el.closest(".data-row");
-
-            var id = el.data('game-id');
-
-            $("#modal-game-id").val(id);
-        })
-    })
-</script>
 <div class="container title p-1">
     <h4 class="fw-normal p-1">Shopping Cart</h4>
     <table class="table">

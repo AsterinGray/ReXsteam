@@ -3,6 +3,7 @@
 @section('title', 'Home')
 
 @section('content')
+    @parent
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul>

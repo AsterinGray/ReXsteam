@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function() {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
 
-
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 Route::resource('cart', TransactionDetailController::class);
