@@ -27,7 +27,12 @@ class GameController extends Controller
 
     public function showManageGamePage() {
         $genres = Genre::all();
-        $games = Game::paginate(8);
+        $games = Game::all();
+        if(request('search')) {
+            $games = Game::where('title','LIKE',"%".request('search')."%")->paginate(8);
+        } else {
+            $games = Game::paginate(8);
+        }
         return view('game.manage_game', compact('genres', 'games'));
     }
 

@@ -22,10 +22,10 @@
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="{{route('index')}}">Home</a>
               </li>
-              
+
               @if (Auth::user()->role == "admin")
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{route('index')}}">Manage Games</a>
+                    <a class="nav-link" aria-current="page" href="{{route('manage_game')}}">Manage Games</a>
                 </li>
               @endif
             </ul>
