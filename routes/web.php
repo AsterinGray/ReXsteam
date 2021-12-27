@@ -31,7 +31,7 @@ Route::patch('/age', [UserController::class, 'checkAge'])->name('age.action');
 Route::post('/age', [UserController::class, 'cancelCheckAge'])->name('age.cancel');
 
 Route::middleware('age')->group(function() {
-    Route::view('/game/{id}', 'game.index')->name('game.detail');
+    Route::get('/game/{id}', [GameController::class, 'show'])->name('game.detail');
 });
 
 Route::middleware('auth')->group(function() {
