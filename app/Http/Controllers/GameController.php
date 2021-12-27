@@ -15,7 +15,12 @@ class GameController extends Controller
      */
     public function index()
     {
-        $games = Game::all()->random(8);
+        $games = Game::all();
+        if(request('search')) {
+            $games = Game::where('title','LIKE',"%".request('search')."%")->get();
+        } else {
+            $games = $games->random(8);
+        }
         return view('index', compact('games'));
     }
 

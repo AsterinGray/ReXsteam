@@ -7,10 +7,10 @@
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <video src="{{$game->trailer_video}}"></video>
+                <video src="{{$game->trailer_video}}" controls></video>
             </div>
             <div class="col-4">
-                <img src="{{$game->image_preview}}" alt="">
+                <img class="w-100" src="{{$game->image_preview}}" alt="">
                 <h1>{{$game->title}}</h1>
                 <p>{{$game->description}}</p>
                 <p><b>Genre: </b>{{$game->genre->name}}</p>
@@ -25,7 +25,7 @@
                     <div class="d-flex justify-content-between align-items-center">
                         <h5>Buy {{$game->title}}</h5>
                         <form action="">
-                            <button type="submit" class="btn btn-primary">Add to Cart | {{$game->price}}</button>
+                            <button type="submit" class="btn btn-primary">Add to Cart | Rp. {{number_format($game->price)}}</button>
                         </form>
                     </div>
                 </div>
