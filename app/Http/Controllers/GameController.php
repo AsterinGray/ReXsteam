@@ -15,7 +15,8 @@ class GameController extends Controller
      */
     public function index()
     {
-        //
+        $games = Game::all()->random(8);
+        return view('index', compact('games'));
     }
 
     /**

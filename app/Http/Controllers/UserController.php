@@ -50,10 +50,10 @@ class UserController extends Controller
         $age = Carbon::parse($request->birth_date)->diff(Carbon::now())->y;
         $request->session()->put('age', $age);
 
-        $url = $request->session()->pull('game-detail');
+        $id = $request->session()->pull('game-detail');
 
         if($age < 17) return redirect()->route('index')->withErrors("You need to be at least 17 to access this page");
-        return redirect($url);
+        return redirect()->route('game.detail', [$id]);
     }
 
     public function cancelCheckAge() {

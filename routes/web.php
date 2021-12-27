@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendController;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\TransactionDetailController;
 use App\Http\Controllers\TransactionHeaderController;
 use Illuminate\Support\Facades\Route;
@@ -17,22 +18,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [GameController::class, 'index'])->name('index');
+
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginAction'])->name('login.action');
 Route::get('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/register', [AuthController::class, 'registerAction'])->name('register.action');
 
-Route::middleware('age')->group(function() {
-    Route::view('/game/{id}', 'game.index')->name('game.index');
-});
 
 Route::view('/age', 'user.age')->name('age');
 Route::patch('/age', [UserController::class, 'checkAge'])->name('age.action');
 Route::post('/age', [UserController::class, 'cancelCheckAge'])->name('age.cancel');
 
-Route::middleware('auth')->group(function() {
-    Route::view('/', 'index')->name('index');
+Route::middleware('age')->group(function() {
+    Route::view('/game/{id}', 'game.index')->name('game.detail');
+});
 
+Route::middleware('auth')->group(function() {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
 
