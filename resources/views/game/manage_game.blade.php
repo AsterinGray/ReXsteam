@@ -6,9 +6,9 @@
     <div class="row">
         <div class="col-md-3">
             <h5 class="mt-4 mb-3">Filter by Games Name</h5>
-            <form class="input-group mb-3" method="POST" action="" enctype="multipart/form-data">
+            <form class="input-group mb-3" action="{{route('manage_game')}}">
                 @csrf
-                <input type="text" class="form-control" minlength="1" placeholder="Game Name" name="game_name">
+                <input type="search" class="form-control" minlength="1" placeholder="Game Name" name="search">
             </form>
         </div>
     </div>
