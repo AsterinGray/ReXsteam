@@ -11,9 +11,66 @@
 </head>
 <body>
     @section('content')
-        <nav>
-            <a href="{{route('logout')}}">Logout</a>
-        </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+        <div class="container">
+          <div class="navbar-brand">ReXsteam</div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="{{route('index')}}">Home</a>
+              </li>
+              
+              @if (Auth::user()->role == "admin")
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="{{route('index')}}">Manage Games</a>
+                </li>
+              @endif
+            </ul>
+            <form class="d-flex" action="{{route('index')}}">
+              <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <ul class="navbar-nav mb-2 mb-lg-0">
+                @guest
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{route('login')}}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{route('register')}}">Register</a>
+                    </li>
+                @else
+                    <li class="nav-item dropdown">
+                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            {{ Auth::user()->username }}
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('profile') }}">Profile</a>
+
+                            @if (Auth::user()->role == "member")
+                                <a class="dropdown-item" href="/friends">Friends</a>
+                                <a class="dropdown-item" href="{{route('history')}}">Transaction History</a>
+                            @endif
+
+                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            onclick="event.preventDefault();
+                                            document.getElementById('logout-form').submit();">
+                                {{ __('Logout') }}
+                            </a>
+
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    </li>
+                @endguest
+            </ul>
+          </div>
+        </div>
+      </nav>
     @show
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
