@@ -19,6 +19,10 @@ class GameController extends Controller
         return view('index', compact('games'));
     }
 
+    public function showManageGamePage() {
+        return view('game.manage_game');
+    }
+
     /**
      * Show the form for creating a new resource.
      *

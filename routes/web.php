@@ -34,6 +34,10 @@ Route::middleware('age')->group(function() {
     Route::view('/game/{id}', 'game.index')->name('game.detail');
 });
 
+Route::middleware('admin')->group(function() {
+    Route::get('/manage-game', [GameController::class, 'showManageGamePage'])->name('manage_game');
+});
+
 Route::middleware('auth')->group(function() {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
