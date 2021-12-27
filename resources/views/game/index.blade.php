@@ -7,7 +7,7 @@
     <div class="container">
         <div class="row">
             <div class="col-8">
-                <video src="{{$game->trailer_video}}"></video>
+                <video src="{{$game->trailer_video}}" autoplay controls></video>
             </div>
             <div class="col-4">
                 <img src="{{$game->image_preview}}" alt="">

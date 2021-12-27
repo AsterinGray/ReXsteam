@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('cart', TransactionDetailController::class);
     Route::resource('transaction', TransactionHeaderController::class);
     Route::resource('friends', FriendController::class);
+    Route::resource('game', GameController::class);
     Route::get('/receipt/{transactionId}', [TransactionHeaderController::class, 'receipt'])->name('receipt');
     Route::get('/history', [TransactionHeaderController::class, 'show'])->name('history');
 });
