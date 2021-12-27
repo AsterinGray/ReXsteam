@@ -37,10 +37,10 @@ Route::middleware('auth')->group(function() {
     Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
-});
 
-Route::resource('cart', TransactionDetailController::class);
-Route::resource('transaction', TransactionHeaderController::class);
-Route::resource('friends', FriendController::class);
-Route::get('/receipt/{transactionId}', [TransactionHeaderController::class, 'receipt'])->name('receipt');
-Route::get('/history', [TransactionHeaderController::class, 'show'])->name('history');
+    Route::resource('cart', TransactionDetailController::class);
+    Route::resource('transaction', TransactionHeaderController::class);
+    Route::resource('friends', FriendController::class);
+    Route::get('/receipt/{transactionId}', [TransactionHeaderController::class, 'receipt'])->name('receipt');
+    Route::get('/history', [TransactionHeaderController::class, 'show'])->name('history');
+});
