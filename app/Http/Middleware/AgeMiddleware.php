@@ -6,6 +6,7 @@ use App\Models\Game;
 use Closure;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 
 class AgeMiddleware
 {
@@ -23,9 +24,10 @@ class AgeMiddleware
 
         if($game->for_adult) {
             $request->session()->put('game-detail', $id);
-            if(! $request->session()->has('age')) return redirect()->route('age');
+            $age = Cookie::get('age');
 
-            $age = $request->session()->pull('age');
+            if(! $age) return redirect()->route('age');
+
             if($age < 17) return redirect()->route('index')->withErrors("You need to be at least 17 to access this page");
         }
 

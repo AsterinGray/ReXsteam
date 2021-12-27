@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -48,7 +49,7 @@ class UserController extends Controller
         ]);
 
         $age = Carbon::parse($request->birth_date)->diff(Carbon::now())->y;
-        $request->session()->put('age', $age);
+        Cookie::queue('age', $age);
 
         $id = $request->session()->pull('game-detail');
 
