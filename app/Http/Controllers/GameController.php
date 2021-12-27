@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Game;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
+use App\Models\Genre;
 
 class GameController extends Controller
 {
@@ -22,6 +23,12 @@ class GameController extends Controller
             $games = $games->random(8);
         }
         return view('index', compact('games'));
+    }
+
+    public function showManageGamePage() {
+        $genres = Genre::all();
+        $games = Game::paginate(8);
+        return view('game.manage_game', compact('genres', 'games'));
     }
 
     /**
@@ -83,11 +90,12 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Game  $game
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Game $game)
+    public function destroy($id)
     {
-        //
+        Game::destroy($id);
+        return redirect()->back();
     }
 }

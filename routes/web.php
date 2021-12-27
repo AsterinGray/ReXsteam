@@ -35,6 +35,10 @@ Route::middleware('age')->group(function() {
     Route::get('/game/{id}', [GameController::class, 'show'])->name('game.detail');
 });
 
+Route::middleware('admin')->group(function() {
+    Route::get('/manage-game', [GameController::class, 'showManageGamePage'])->name('manage_game');
+});
+
 Route::middleware('auth')->group(function() {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
@@ -44,7 +48,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('cart', TransactionDetailController::class);
     Route::resource('transaction', TransactionHeaderController::class);
     Route::resource('friends', FriendController::class);
+    Route::resource('game', GameController::class);
     Route::get('/receipt/{transactionId}', [TransactionHeaderController::class, 'receipt'])->name('receipt');
     Route::get('/history', [TransactionHeaderController::class, 'show'])->name('history');
 });
-
