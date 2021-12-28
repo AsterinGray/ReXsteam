@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Genre;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 
 class GameController extends Controller
 {
@@ -44,7 +42,7 @@ class GameController extends Controller
 
         return view('index', compact('games'));
     }
-
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -159,15 +157,20 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Game  $game
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Game $game)
+    public function destroy($id)
     {
+<<<<<<< HEAD
         Storage::delete('trailer_video/'.$game->trailer_video);
         Storage::delete('image_preview/'.$game->image_preview);
         Game::destroy($game->id);
 
         return redirect()->back()->withSuccess("Game Deleted");
+=======
+        Game::destroy($id);
+        return redirect()->back();
+>>>>>>> be5350940b34eb85490d075010efb4a0444dc124
     }
 }
