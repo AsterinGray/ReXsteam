@@ -43,6 +43,13 @@
                         <a class="nav-link" aria-current="page" href="{{route('register')}}">Register</a>
                     </li>
                 @else
+                    @auth
+                        @if (Auth::user()->role == 'member')
+                            <li>
+                                <a class="btn nav-link" href="{{route('cart.index')}}"><i class="fa fa-shopping-cart"></i></a>
+                            </li>
+                        @endif
+                    @endauth
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->username }}
@@ -62,7 +69,7 @@
                                 {{ __('Logout') }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('logout') }}" class="d-none">
                                 @csrf
                             </form>
                         </div>

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Genre;
+use App\Models\TransactionDetail;
+use App\Models\TransactionHeader;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -100,6 +103,27 @@ class GameController extends Controller
     {
         $game = Game::find($id);
         return view('game.show', compact('game'));
+    }
+
+    public function addToCart($id) {
+        $user_id = Auth::user()->id;
+        $transaction = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'cart')->first();
+        $transaction_detail = $transaction->detail;
+        $alreadyInCart = false;
+        foreach($transaction_detail as $td) {
+            if($td->game->id == $id) {
+                $alreadyInCart = true;
+                break;
+            }
+        }
+        if($alreadyInCart) return redirect()->route('game.detail', [$id])->withErrors('Game already in cart');
+        $detail = new TransactionDetail();
+        $detail->fill([
+            'transaction_id' => $transaction->id,
+            'game_id' => $id,
+        ]);
+        $detail->save();
+        return redirect()->route('game.detail', [$id])->withSuccess('Game added to cart');
     }
 
     /**
