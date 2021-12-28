@@ -25,7 +25,7 @@ class CreateGamesTable extends Migration
             $table->datetime('release_date');
             $table->string('developer');
             $table->string('publisher');
-            $table->boolean('for_adult');
+            $table->boolean('for_adult')->default(false);
             $table->double('price');
             $table->timestamps();
         });
