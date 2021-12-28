@@ -5,6 +5,21 @@
 @section('content')
     @parent
     <div class="container">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (Session::get('success'))
+            <div class="alert alert-success">
+                {{Session::get('success')}}
+            </div>
+        @endif
         <div class="row">
             <div class="col-8">
                 <video src="{{$game->trailer_video}}" controls></video>
@@ -24,7 +39,8 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5>Buy {{$game->title}}</h5>
-                        <form action="">
+                        <form action="{{route('game.add', ['id' => $game->id])}}" enctype="multipart/form-data">
+                            @csrf
                             <button type="submit" class="btn btn-primary">Add to Cart | Rp. {{number_format($game->price)}}</button>
                         </form>
                     </div>

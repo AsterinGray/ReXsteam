@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function() {
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    Route::get('/game-cart/{id}', [GameController::class, 'addToCart'])->name('game.add');
+
     Route::resource('cart', TransactionDetailController::class);
     Route::resource('transaction', TransactionHeaderController::class);
     Route::resource('friends', FriendController::class);
