@@ -14,8 +14,9 @@
         </ul>
     </div>
     @endif
-    <form action="{{route('game.update', $game->id)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('games.update', $game)}}" method="POST" enctype="multipart/form-data">
         @csrf
+        @method('patch')
         <div class="mt-4">
           <label for="description" class="form-label">Game Description</label>
           <textarea name="description" class="form-control" rows="2" aria-describedby="gameDescHelp">{{$game->description}}</textarea>
@@ -28,9 +29,9 @@
         </div>
         <div class="mt-4">
             <label for="genre" class="form-label">Game Category</label>
-            <select class="form-select" name="genre">
+            <select class="form-select" name="genre_id">
                 @foreach ($genres as $genre)
-                    <option value="{{$genre->name}}" @if ($genre->id == $game->genre_id) selected @endif>{{$genre->name}}</option>
+                    <option value="{{$genre->id}}" @if ($genre->id == $game->genre_id) selected @endif>{{$genre->name}}</option>
                 @endforeach
             </select>
         </div>
@@ -51,7 +52,7 @@
         </div>
       </div>
       <div class="justify-content-end d-flex mt-4 mb-5">
-        <a class="btn p-0 me-2" href="{{route('manage_game')}}"><button class="btn btn-light" type="button">Cancel</button></a>
+        <a class="btn p-0 me-2" href="{{route('games.index')}}"><button class="btn btn-light" type="button">Cancel</button></a>
         <button type="submit" class="btn btn-secondary">Save</button>
       </div>
     </form>

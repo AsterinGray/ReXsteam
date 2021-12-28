@@ -9,7 +9,7 @@
             {{Session::get('success')}}
         </div>
     @endif
-    <form action="{{route('game.index')}}">
+    <form action="{{route('games.index')}}">
         <div class="row">
             <div class="col-md-3">
                 <h5 class="mt-4 mb-3">Filter by Games Name</h5>
@@ -43,7 +43,7 @@
                     <p>{{$game->genre->name}}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-evenly">
-                    <a class="btn p-0" href="{{route('update_game', $game->id)}}"><button class="btn btn-theme float-left" type="submit"><i class="fa fa-pencil"></i>&nbsp;Update</button></a>
+                    <a class="btn p-0" href="{{route('games.edit', $game->id)}}"><button class="btn btn-theme float-left" type="submit"><i class="fa fa-pencil"></i>&nbsp;Update</button></a>
                     <button class="btn btn-theme float-right" data-bs-toggle="modal" data-bs-target="#delete-modal-{{$game->id}}" type="submit">
                         <i class="fa fa-trash"></i>&nbsp;Delete
                     </button>
@@ -63,7 +63,7 @@
         </ul>
     </nav>
     <div class="justify-content-end d-flex">
-        <a class="btn p-0 mb-5" href="{{route('create_game')}}"><button class="btn btn-secondary rounded-circle" type="submit"><i class="fa fa-plus-circle"></i></button></a>
+        <a class="btn p-0 mb-5" href="{{route('games.create')}}"><button class="btn btn-secondary rounded-circle" type="submit"><i class="fa fa-plus-circle"></i></button></a>
     </div>
 </div>
 @foreach ($games as $game)
@@ -73,7 +73,7 @@
             <div class="modal-header border-0">
                 <h5 class="modal-title">Delete Cart</h5>
             </div>
-            <form action="{{ route('game.destroy', $game->id) }}" method="post">
+            <form action="{{ route('games.destroy', $game->id) }}" method="post">
                 @csrf
                 @method('delete')
                 <div class="modal-body">

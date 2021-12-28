@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title text-center">CREATE GAME</div>
-                <form action={{route('game.store')}} method="POST" enctype="multipart/form-data">
+                <form action={{route('games.store')}} method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
