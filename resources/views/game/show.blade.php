@@ -13,7 +13,7 @@
                 <img class="w-100" src="{{$game->image_preview}}" alt="">
                 <h1>{{$game->title}}</h1>
                 <p>{{$game->description}}</p>
-                <p><b>Genre: </b>{{$game->genre->name}}</p>
+                <p><b>Genre: </b>{{$game->genre_id}}</p>
                 <p><b>Release Date: </b>{{$game->release_date}}</p>
                 <p><b>Developer: </b>{{$game->developer}}</p>
                 <p><b>Publisher: </b>{{$game->publisher}}</p>
