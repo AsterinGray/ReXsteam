@@ -5,7 +5,7 @@
 @section('content')
     @parent
     <div class="container">
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-8">
                 <video src="{{$game->trailer_video}}" controls></video>
             </div>
@@ -20,16 +20,18 @@
             </div>
         </div>
         @auth
-            <div class="card mb-3">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <h5>Buy {{$game->title}}</h5>
-                        <form action="">
-                            <button type="submit" class="btn btn-primary">Add to Cart | Rp. {{number_format($game->price)}}</button>
-                        </form>
+            @if (Auth::user()->role == "member")
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5>Buy {{$game->title}}</h5>
+                            <form action="">
+                                <button type="submit" class="btn btn-primary">Add to Cart | Rp. {{number_format($game->price)}}</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
         @endauth
         <div>
             <h1>About This Game</h1>
