@@ -36,7 +36,7 @@
           <div class="col-8">
             <label for="country" class="form-label">Country</label>
             <select class="form-select" name="card_country">
-                <option selected>Indonesia</option>
+                <option value="Indonesia" selected>Indonesia</option>
                 <option value="Spain">Spain</option>
                 <option value="Italy">Italy</option>
                 <option value="England">England</option>

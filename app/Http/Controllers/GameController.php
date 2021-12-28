@@ -87,7 +87,7 @@ class GameController extends Controller
 
         Game::create($data);
 
-        return redirect()->route('manage_game')->withSuccess("Game created");
+        return redirect()->route('games.index')->withSuccess("Game created");
     }
 
     /**
@@ -105,7 +105,7 @@ class GameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Game  $game
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -125,15 +125,12 @@ class GameController extends Controller
     public function update(Request $request, Game $game)
     {
         $data = $request->validate([
-            'title' => ['required', Rule::unique('games')->ignore($game->id)],
             'description' => 'required|max:500',
             'long_description' => 'required|max:2000',
             'genre_id' => 'required',
-            'developer' => 'required',
-            'publisher' => 'required',
-            'price' => 'required|numeric|max:1000000000',
-            'image_preview' => 'file|mimes:jpg|max:100000',
-            'trailer_video' => 'file|mimes:webm|max:100000000',
+            'price' => 'required|numeric|max:1000000',
+            'image_preview' => 'file|mimes:jpg|max:100',
+            'trailer_video' => 'file|mimes:webm|max:102400',
         ]);
 
         if($request["image_preview"]) {
@@ -155,7 +152,7 @@ class GameController extends Controller
         }
 
         $game->update($data);
-        return redirect()->route('manage_game')->withSuccess("Game Updated");
+        return redirect()->route('games.index')->withSuccess("Game Updated");
     }
 
     /**

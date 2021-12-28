@@ -25,7 +25,7 @@
               @auth
                 @if (Auth::user()->role == "admin")
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="{{route('manage_game')}}">Manage Games</a>
+                        <a class="nav-link" aria-current="page" href="{{route('games.index')}}">Manage Games</a>
                     </li>
                 @endif
               @endauth
