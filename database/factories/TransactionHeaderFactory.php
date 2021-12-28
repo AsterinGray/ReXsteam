@@ -14,7 +14,7 @@ class TransactionHeaderFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => $this->faker->numberBetween(1, 10),
+            'user_id' => $this->faker->unique()->numberBetween(1, 10),
             'card_name' => $this->faker->firstName(),
             'card_number' => $this->faker->numberBetween(100000000000, 999999999999),
             'card_country' => $this->faker->country(),

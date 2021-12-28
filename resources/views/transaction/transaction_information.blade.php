@@ -12,7 +12,7 @@
         </div>
         <div class="mb-3">
           <label for="cardNumber" class="form-label">Card Number</label>
-          <input type="text" name="card_number" minlength="16" maxlength="16" class="form-control" placeholder="0000 0000 0000 0000" aria-describedby="cardNumberHelp">
+          <input type="text" name="card_number" minlength="19" maxlength="19" class="form-control" placeholder="0000 0000 0000 0000" aria-describedby="cardNumberHelp">
           <div id="cardNumberHelp" class="form-text">VISA or Master Card.</div>
         </div>
         <div class="row mb-3">
