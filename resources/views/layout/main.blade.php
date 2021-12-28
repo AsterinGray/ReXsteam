@@ -22,7 +22,6 @@
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="{{route('index')}}">Home</a>
               </li>
-
               @auth
                 @if (Auth::user()->role == "admin")
                     <li class="nav-item">

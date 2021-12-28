@@ -161,12 +161,15 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  Game $game
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($game)
     {
-        Game::destroy($id);
-        return redirect()->back();
+        Storage::delete('trailer_video/'.$game->trailer_video);
+        Storage::delete('image_preview/'.$game->image_preview);
+        Game::destroy($game->id);
+
+        return redirect()->back()->withSuccess("Game Deleted");
     }
 }
