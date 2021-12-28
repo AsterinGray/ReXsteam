@@ -34,10 +34,9 @@ class UserController extends Controller
 
 
         if($request->profile_image) {
-            Storage::delete($user->profile_image);
             $profile_image = $request->file('profile_image')->getClientOriginalName();
-            $request->file('profile_image')->storeAs('public/images/profile_image', $profile_image);
-            $data["profile_image"] = $profile_image;
+            $request->file('profile_image')->storeAs('public/profile_image', $profile_image);
+            $data["profile_image"] = 'profile_image/'.$profile_image;
         }
 
         $user->update($data);

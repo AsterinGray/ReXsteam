@@ -82,10 +82,10 @@ class GameController extends Controller
 
         $image_preview = $request->file('image_preview')->getClientOriginalName();
         $trailer_video = $request->file('trailer_video')->getClientOriginalName();
-        $request->file('image_preview')->storeAs('public/images/image_preview', $image_preview);
-        $request->file('trailer_video')->storeAs('public/images/trailer_video', $trailer_video);
-        $data["image_preview"] = $image_preview;
-        $data["trailer_video"] = $trailer_video;
+        $request->file('image_preview')->storeAs('public/image_preview', $image_preview);
+        $request->file('trailer_video')->storeAs('public/trailer_video', $trailer_video);
+        $data["image_preview"] = 'image_preview/'.$image_preview;
+        $data["trailer_video"] = 'trailer_video/'.$trailer_video;
         $data["release_date"] = now();
 
         Game::create($data);
@@ -158,19 +158,17 @@ class GameController extends Controller
         ]);
 
         if($request["image_preview"]) {
-            Storage::delete($game->image_preview);
             $image_preview = $request->file('image_preview')->getClientOriginalName();
             $request->file('image_preview')->storeAs('public/image_preview', $image_preview);
-            $data["image_preview"] = $image_preview;
+            $data["image_preview"] = 'image_preview/'.$image_preview;
         } else {
             $data["image_preview"] = $game->image_preview;
         }
 
         if($request["trailer_video"]) {
-            Storage::delete($game->trailer_video);
             $trailer_video = $request->file('trailer_video')->getClientOriginalName();
             $request->file('trailer_video')->storeAs('public/trailer_video', $trailer_video);
-            $data["trailer_video"] = $trailer_video;
+            $data["trailer_video"] = 'trailer_video/'.$trailer_video;
         } else {
             $data["trailer_video"] = $game->trailer_video;
         }
@@ -182,14 +180,12 @@ class GameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  Game $game
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($game)
+    public function destroy($id)
     {
-        Storage::delete('trailer_video/'.$game->trailer_video);
-        Storage::delete('image_preview/'.$game->image_preview);
-        Game::destroy($game->id);
+        Game::destroy($id);
 
         return redirect()->back()->withSuccess("Game Deleted");
     }

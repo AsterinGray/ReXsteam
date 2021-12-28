@@ -21,15 +21,13 @@
             </div>
         @endif
         <div class="row mb-3">
-            <div class="col-8">
-                <video src="{{$game->trailer_video}}" controls></video>
-            </div>
+            <video class="col-8" src="{{asset('storage/'.$game->trailer_video)}}" controls></video>
             <div class="col-4">
-                <img class="w-100" src="{{$game->image_preview}}" alt="">
+                <img class="w-100" src="{{asset('storage/'.$game->image_preview)}}" alt="">
                 <h1>{{$game->title}}</h1>
                 <p>{{$game->description}}</p>
                 <p><b>Genre: </b>{{$game->genre->name}}</p>
-                <p><b>Release Date: </b>{{$game->release_date}}</p>
+                <p><b>Release Date: </b>{{date('d-m-Y', strtotime($game->release_date))}}</p>
                 <p><b>Developer: </b>{{$game->developer}}</p>
                 <p><b>Publisher: </b>{{$game->publisher}}</p>
             </div>

@@ -27,7 +27,7 @@
                     @method('PATCH')
                     <div class="mb-3">
                         <label for="profile_image" class="form-label">
-                            <img style="width: 8rem" src="{{ asset("storage/images")."/".$user->profile_image}}" alt="">
+                            <img style="width: 8rem" src="{{ asset("storage/".$user->profile_image)}}" alt="">
                         </label>
                         <input type="file" name="profile_image" id="username" value="{{$user->profile_image}}" class="form-control" readonly>
                     </div>
