@@ -35,7 +35,9 @@ Route::middleware('age')->group(function() {
 });
 
 Route::middleware('admin')->group(function() {
-    Route::get('/manage-game', [GameController::class, 'showManageGamePage'])->name('manage_game');
+    Route::get('/manage-game', [GameController::class, 'index'])->name('manage_game');
+    Route::get('/create-game', [GameController::class, 'create'])->name('create_game');
+    Route::get('/update-game/{gameId}', [GameController::class, 'edit'])->name('update_game');
 });
 
 Route::middleware('auth')->group(function() {
@@ -50,6 +52,4 @@ Route::middleware('auth')->group(function() {
     Route::resource('game', GameController::class);
     Route::get('/receipt/{transactionId}', [TransactionHeaderController::class, 'receipt'])->name('receipt');
     Route::get('/history', [TransactionHeaderController::class, 'show'])->name('history');
-
-    Route::resource('games', GameController::class);
 });

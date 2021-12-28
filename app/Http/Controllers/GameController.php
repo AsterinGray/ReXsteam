@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Genre;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class GameController extends Controller
 {
@@ -15,35 +17,8 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::simplePaginate(8);
-        $genres = Genre::all();
-
-        if(request('search')) {
-            $games = Game::where('title','LIKE',"%".request('search')."%")->simplePaginate(8);
-        }
-
-        if(request('genre')) {
-            $games = $games->where('genre_id',request('genre'));
-        }
-
-        return view('game.index', compact('games', 'genres'));
-    }
-
-    public function home()
-    {
-        $games = Game::all();
-        if(request('search')) {
-            $games = Game::where('title','LIKE',"%".request('search')."%")->get();
-        } else {
-            $games = $games->random(8);
-        }
-
-        return view('index', compact('games'));
-    }
-
-    public function showManageGamePage(Request $request) {
         $genres = Genre::all();
         $games = Game::all();
         $genre_checked = collect([]);
@@ -56,7 +31,19 @@ class GameController extends Controller
         else if(!request('search') && $genre_checked->count() > 0)
             $games = Game::whereIn('genre_id', $genre_checked)->paginate(8);
         else $games = Game::paginate(8);
-        return view('game.manage_game', compact('genres', 'games'));
+        return view('game.index', compact('genres', 'games'));
+    }
+
+    public function home()
+    {
+        $games = Game::all();
+        if(request('search')) {
+            $games = Game::where('title','LIKE',"%".request('search')."%")->get();
+        } else {
+            $games = $games->random(8);
+        }
+
+        return view('index', compact('games'));
     }
 
     /**
@@ -100,17 +87,18 @@ class GameController extends Controller
 
         Game::create($data);
 
-        return redirect()->route('games.index')->withSuccess("Game created");
+        return redirect()->route('manage_game')->withSuccess("Game created");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Game  $game
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Game $game)
+    public function show($id)
     {
+        $game = Game::find($id);
         return view('game.show', compact('game'));
     }
 
@@ -167,7 +155,7 @@ class GameController extends Controller
         }
 
         $game->update($data);
-        return redirect()->route('games.index')->withSuccess("Game Updated");
+        return redirect()->route('manage_game')->withSuccess("Game Updated");
     }
 
     /**

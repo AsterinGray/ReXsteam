@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', )
+@section('title', 'Create Game')
 
 @section('content')
     @parent
@@ -23,7 +23,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card-title text-center">CREATE GAME</div>
-                <form action={{route('games.store')}} method="POST" enctype="multipart/form-data">
+                <form action={{route('game.store')}} method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
@@ -36,7 +36,7 @@
                     <div class="mb-3">
                         <label for="long_description" class="form-label">Long Description</label>
                         <textarea type="text" name="long_description" id="long_description" class="form-control"></textarea>
-                    </div>                    
+                    </div>
                     <div class="mb-3">
                         <label for="genre">Genre</label>
                         <select name="genre_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
@@ -49,11 +49,11 @@
                     <div class="mb-3">
                         <label for="developer" class="form-label">Developer</label>
                         <input type="text" name="developer" id="developer" class="form-control">
-                    </div>   
+                    </div>
                     <div class="mb-3">
                         <label for="publisher" class="form-label">Publisher</label>
                         <input type="text" name="publisher" id="publisher" class="form-control">
-                    </div>   
+                    </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
                         <input type="number" name="price" id="price" class="form-control">
@@ -75,5 +75,5 @@
             </div>
         </div>
     </div>
-    
+
 @endsection

@@ -1,80 +1,59 @@
 @extends('layout.main')
-
-@section('title', )
-
+@section('title', 'Update Game ' . $game->title)
 @section('content')
-    @parent
-    <div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-
-        @if (Session::get('success'))
-            <div class="alert alert-success">
-                {{Session::get('success')}}
-            </div>
-        @endif
-        <div class="card">
-            <div class="card-body">
-                <div class="card-title text-center">EDIT GAME</div>
-                <form action={{route('games.update', $game)}} method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method("put")
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" name="title" id="title" class="form-control" value="{{$game->title}}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <input type="text" name="description" id="description" class="form-control" value="{{$game->description}}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="long_description" class="form-label">Long Description</label>
-                        <textarea type="text" name="long_description" id="long_description" class="form-control">{{$game->long_description}}</textarea>
-                    </div>                    
-                    <div class="mb-3">
-                        <label for="genre">Genre</label>
-                        <select name="genre_id" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option>Select Genre</option>
-                            @foreach ($genres as $genre)
-                                <option value="{{$genre->id}}" selected={{$game->genre_id == $genre->id}}>{{$genre->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="developer" class="form-label">Developer</label>
-                        <input type="text" name="developer" id="developer" class="form-control" value="{{$game->developer}}">
-                    </div>   
-                    <div class="mb-3">
-                        <label for="publisher" class="form-label">Publisher</label>
-                        <input type="text" name="publisher" id="publisher" class="form-control" value="{{$game->publisher}}">
-                    </div>   
-                    <div class="mb-3">
-                        <label for="price" class="form-label">Price</label>
-                        <input type="number" name="price" id="price" class="form-control" value="{{$game->price}}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="image_preview" class="form-label">Image Preview</label>
-                        <input type="file" name="image_preview" id="image_preview" class="form-control">
-                    </div>
-                    <div class="mb-3">
-                        <label for="trailer_video" class="form-label">Trailer Video</label>
-                        <input type="file" name="trailer_video" id="trailer_video" class="form-control">
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="for_adult" name="for_adult" checked={{$game->for_adult}}>
-                        <label class="form-check-label" for="for_adult">Only for Adult?</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
-            </div>
-        </div>
+@parent
+<div class="container title p-1">
+    <h4 class="fw-normal p-1">Update Games</h4>
+    @if ($errors->any())
+    <div class="px-4 alert alert-danger">
+        <strong>There were {{$errors->count()}} errors with your submission</strong>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
     </div>
-    
+    @endif
+    <form action="{{route('game.update', $game->id)}}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="mt-4">
+          <label for="description" class="form-label">Game Description</label>
+          <textarea name="description" class="form-control" rows="2" aria-describedby="gameDescHelp">{{$game->description}}</textarea>
+          <div id="gameDescHelp" class="form-text">Write a single sentence about the game.</div>
+        </div>
+        <div class="mt-4">
+          <label for="long_description" class="form-label">Game Long Description</label>
+          <textarea name="long_description" class="form-control" rows="5" aria-describedby="gameLongDescHelp">{{$game->long_description}}</textarea>
+          <div id="gameLongDescHelp" class="form-text">Write a few sentence about the game.</div>
+        </div>
+        <div class="mt-4">
+            <label for="genre" class="form-label">Game Category</label>
+            <select class="form-select" name="genre">
+                @foreach ($genres as $genre)
+                    <option value="{{$genre->name}}" @if ($genre->id == $game->genre_id) selected @endif>{{$genre->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class="mt-4">
+          <label for="price" class="form-label">Game Price</label>
+          <input type="text" name="price" class="form-control" value="{{$game->price}}">
+        </div>
+        <div class="mt-4">
+            <div class="form-group files color">
+                <label>Game Cover</label>
+                <input name="image_preview" class="mt-2" type="file" class="form-control">
+            </div>
+       </div>
+       <div class="mt-4">
+        <div class="form-group video color">
+            <label>Game Trailer</label>
+            <input name="trailer_video" class="mt-2" type="file" class="form-control">
+        </div>
+      </div>
+      <div class="justify-content-end d-flex mt-4 mb-5">
+        <a class="btn p-0 me-2" href="{{route('manage_game')}}"><button class="btn btn-light" type="button">Cancel</button></a>
+        <button type="submit" class="btn btn-secondary">Save</button>
+      </div>
+    </form>
+</div>
 @endsection

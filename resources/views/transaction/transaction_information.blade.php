@@ -1,6 +1,7 @@
 @extends('layout.main')
 @section('title', 'Transaction Information')
 @section('content')
+@parent
 <div class="container title p-1">
     <h4 class="fw-normal p-1">Transaction Information</h4>
     <form class="row g-3 p-4" method="POST" action="{{route('transaction.store')}}" enctype="multipart/form-data">
