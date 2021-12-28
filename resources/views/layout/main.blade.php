@@ -23,11 +23,13 @@
                 <a class="nav-link" aria-current="page" href="{{route('index')}}">Home</a>
               </li>
 
-              @if (Auth::user()->role == "admin")
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{route('manage_game')}}">Manage Games</a>
-                </li>
-              @endif
+              @auth
+                @if (Auth::user()->role == "admin")
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{route('manage_game')}}">Manage Games</a>
+                    </li>
+                @endif
+              @endauth
             </ul>
             <form class="d-flex" action="{{route('index')}}">
               <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
@@ -61,7 +63,7 @@
                                 {{ __('Logout') }}
                             </a>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            <form id="logout-form" action="{{ route('logout') }}" class="d-none">
                                 @csrf
                             </form>
                         </div>

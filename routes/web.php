@@ -37,6 +37,7 @@ Route::middleware('age')->group(function() {
 
 Route::middleware('admin')->group(function() {
     Route::get('/manage-game', [GameController::class, 'showManageGamePage'])->name('manage_game');
+    Route::get('/update-game/{gameId}', [GameController::class, 'showUpdateGamePage'])->name('update_game');
 });
 
 Route::middleware('auth')->group(function() {

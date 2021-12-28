@@ -3,24 +3,20 @@
 @section('content')
 <div class="container title p-1">
     <h4 class="fw-normal p-1">Manage Games</h4>
-    <div class="row">
-        <div class="col-md-3">
-            <h5 class="mt-4 mb-3">Filter by Games Name</h5>
-            <form class="input-group mb-3" action="{{route('manage_game')}}">
-                @csrf
-                <input type="search" class="form-control" minlength="1" placeholder="Game Name" name="search">
-            </form>
+    <form action="{{route('manage_game')}}">
+        <div class="row">
+            <div class="col-md-3">
+                <h5 class="mt-4 mb-3">Filter by Games Name</h5>
+                <input type="search" class="form-control" placeholder="Game Name" name="search">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h5 class="mt-2 mb-3">Filter by Games Category</h5>
-            <form class="input-group mb-3" method="POST" action="" enctype="multipart/form-data">
-                @csrf
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <h5 class="mt-2 mb-3">Filter by Games Category</h5>
                 <div class="col-12">
                     @foreach ($genres as $genre)
                         <div class="form-check me-3">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" name="genres[]" value="{{$genre->id}}" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             {{$genre->name}}
                         </label>
@@ -28,27 +24,29 @@
                     @endforeach
                 </div>
                 <button class="btn btn-secondary rounded mt-2" type="submit">Search</button>
-            </form>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        @foreach ($games as $game)
-            <div class="col-3">
-                <div class="card mb-3">
-                    <a href="{{route('game.detail', ["id" => $game->id])}}"><img src="{{$game->image_preview}}" class="card-img-top"></a>
-                    <div class="card-body">
-                        <h5 class="card-title">{{$game->title}}</h5>
-                        <p>{{$game->genre->name}}</p>
-                    </div>
-                    <div class="card-footer d-flex justify-content-evenly">
-                        <a class="btn friend p-0" href=""><button class="btn btn-theme float-left" type="submit"><i class="fa fa-pencil"></i>&nbsp;Update</button></a>
-                        <button class="btn btn-theme float-right" data-bs-toggle="modal" data-bs-target="#delete-modal-{{$game->id}}" type="submit">
-                            <i class="fa fa-trash"></i>&nbsp;Delete
-                        </button>
-                    </div>
+    </form>
+    <div class="row mt-4">
+        @forelse ($games as $game)
+        <div class="col-3">
+            <div class="card mb-3">
+                <a href="{{route('game.detail', ["id" => $game->id])}}"><img src="{{$game->image_preview}}" class="card-img-top"></a>
+                <div class="card-body">
+                    <h5 class="card-title">{{$game->title}}</h5>
+                    <p>{{$game->genre->name}}</p>
+                </div>
+                <div class="card-footer d-flex justify-content-evenly">
+                    <a class="btn p-0" href=""><button class="btn btn-theme float-left" type="submit"><i class="fa fa-pencil"></i>&nbsp;Update</button></a>
+                    <button class="btn btn-theme float-right" data-bs-toggle="modal" data-bs-target="#delete-modal-{{$game->id}}" type="submit">
+                        <i class="fa fa-trash"></i>&nbsp;Delete
+                    </button>
                 </div>
             </div>
-        @endforeach
+        </div>
+        @empty
+        <h4 class="fw-normal fs-5 p-1">There are no games content can be showed right now</h4>
+        @endforelse
     </div>
     <nav>
         <ul class="pagination justify-content-start">
@@ -58,6 +56,9 @@
             {!! $games->links() !!}
         </ul>
     </nav>
+    <div class="justify-content-end d-flex">
+        <a class="btn p-0 mb-5" href=""><button class="btn btn-secondary rounded-circle" type="submit"><i class="fa fa-plus-circle"></i></button></a>
+    </div>
 </div>
 @foreach ($games as $game)
 <div class="modal fade" id="delete-modal-{{$game->id}}" tabindex="-1" role="dialog">

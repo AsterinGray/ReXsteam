@@ -6,6 +6,8 @@ use App\Models\Game;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Genre;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class GameController extends Controller
 {
@@ -25,15 +27,26 @@ class GameController extends Controller
         return view('index', compact('games'));
     }
 
-    public function showManageGamePage() {
+    public function showManageGamePage(Request $request) {
         $genres = Genre::all();
         $games = Game::all();
-        if(request('search')) {
+        $genre_checked = collect([]);
+        foreach((array)$request->input('genres') as $genre)
+            $genre_checked->push($genre);
+        if(request('search') && $genre_checked->count() > 0)
+            $games = Game::whereIn('genre_id', $genre_checked)->where('title','LIKE',"%".request('search')."%")->paginate(8);
+        else if(request('search') && $genre_checked->count() == 0)
             $games = Game::where('title','LIKE',"%".request('search')."%")->paginate(8);
-        } else {
-            $games = Game::paginate(8);
-        }
+        else if(!request('search') && $genre_checked->count() > 0)
+            $games = Game::whereIn('genre_id', $genre_checked)->paginate(8);
+        else $games = Game::paginate(8);
         return view('game.manage_game', compact('genres', 'games'));
+    }
+
+    public function updateGamePage($gameId) {
+        $game = Game::find($gameId);
+
+        return view()
     }
 
     /**
