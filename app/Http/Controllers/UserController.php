@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -33,8 +34,9 @@ class UserController extends Controller
 
 
         if($request->profile_image) {
+            Storage::delete($user->profile_image);
             $profile_image = $request->file('profile_image')->getClientOriginalName();
-            $path = $request->file('profile_image')->storeAs('public/images', $profile_image);
+            $request->file('profile_image')->storeAs('public/images/profile_image', $profile_image);
             $data["profile_image"] = $profile_image;
         }
 

@@ -18,8 +18,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [GameController::class, 'index'])->name('index');
-Route::get('/search', [GameController::class, 'search'])->name('search');
+Route::get('/', [GameController::class, 'home'])->name('index');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginAction'])->name('login.action');
@@ -35,6 +34,7 @@ Route::middleware('age')->group(function() {
     Route::get('/game/{id}', [GameController::class, 'show'])->name('game.detail');
 });
 
+
 Route::middleware('auth')->group(function() {
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::patch('/profile', [UserController::class, 'update'])->name('profile.update');
@@ -46,5 +46,7 @@ Route::middleware('auth')->group(function() {
     Route::resource('friends', FriendController::class);
     Route::get('/receipt/{transactionId}', [TransactionHeaderController::class, 'receipt'])->name('receipt');
     Route::get('/history', [TransactionHeaderController::class, 'show'])->name('history');
+    
+    Route::resource('games', GameController::class);
 });
 
