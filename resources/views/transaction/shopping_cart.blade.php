@@ -1,6 +1,7 @@
 @extends('layout.main')
 @section('title', 'Shopping Cart')
 @section('content')
+@parent
 <div class="container title p-1">
     <h4 class="fw-normal p-1">Shopping Cart</h4>
     <table class="table">

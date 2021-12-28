@@ -17,20 +17,21 @@ class GameController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::simplePaginate(8);
         $genres = Genre::all();
-
-        if(request('search')) {
-            $games = Game::where('title','LIKE',"%".request('search')."%")->simplePaginate(8);
-        }
-
-        if(request('genre')) {
-            $games = $games->where('genre_id',request('genre'));
-        }
-
-        return view('game.index', compact('games', 'genres'));
+        $games = Game::all();
+        $genre_checked = collect([]);
+        foreach((array)$request->input('genres') as $genre)
+            $genre_checked->push($genre);
+        if(request('search') && $genre_checked->count() > 0)
+            $games = Game::whereIn('genre_id', $genre_checked)->where('title','LIKE',"%".request('search')."%")->paginate(8);
+        else if(request('search') && $genre_checked->count() == 0)
+            $games = Game::where('title','LIKE',"%".request('search')."%")->paginate(8);
+        else if(!request('search') && $genre_checked->count() > 0)
+            $games = Game::whereIn('genre_id', $genre_checked)->paginate(8);
+        else $games = Game::paginate(8);
+        return view('game.index', compact('genres', 'games'));
     }
 
     public function home()
@@ -86,17 +87,18 @@ class GameController extends Controller
 
         Game::create($data);
 
-        return redirect()->route('games.index')->withSuccess("Game created");
+        return redirect()->route('manage_game')->withSuccess("Game created");
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Game  $game
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Game $game)
+    public function show($id)
     {
+        $game = Game::find($id);
         return view('game.show', compact('game'));
     }
 
@@ -153,7 +155,7 @@ class GameController extends Controller
         }
 
         $game->update($data);
-        return redirect()->route('games.index')->withSuccess("Game Updated");
+        return redirect()->route('manage_game')->withSuccess("Game Updated");
     }
 
     /**

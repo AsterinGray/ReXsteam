@@ -22,14 +22,13 @@
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="{{route('index')}}">Home</a>
               </li>
-              
-             @if (Auth::user())
+              @auth
                 @if (Auth::user()->role == "admin")
-                  <li class="nav-item">
-                      <a class="nav-link" aria-current="page" href="{{route('games.index')}}">Manage Games</a>
-                  </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="{{route('manage_game')}}">Manage Games</a>
+                    </li>
                 @endif
-             @endif
+              @endauth
             </ul>
             <form class="d-flex" action="{{route('index')}}">
               <input class="form-control me-2" name="search" type="search" placeholder="Search" aria-label="Search">
