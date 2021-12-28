@@ -14,11 +14,13 @@
         </div>
         <div class="col-md-3 mt-5">
             @if ($errors->any())
+            <div class="px-4 alert alert-danger">
                 <ul>
                     @foreach ($errors->all() as $error)
                         <li>{{$error}}</li>
                     @endforeach
                 </ul>
+            </div>
             @endif
         </div>
     </div>

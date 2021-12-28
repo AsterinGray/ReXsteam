@@ -57,7 +57,7 @@
         </div>
     </form>
     @if ($errors->any())
-    <div class="px-4">
+    <div class="px-4 alert alert-danger">
         <strong>There were {{$errors->count()}} errors with your submission</strong>
         <ul>
             @foreach ($errors->all() as $error)

@@ -7,7 +7,7 @@ use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Genre;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class GameController extends Controller
 {
@@ -43,10 +43,10 @@ class GameController extends Controller
         return view('game.manage_game', compact('genres', 'games'));
     }
 
-    public function updateGamePage($gameId) {
+    public function showUpdateGamePage($gameId) {
         $game = Game::find($gameId);
-
-        return view()
+        $genres = Genre::all();
+        return view('game.update_game', compact('game', 'genres'));
     }
 
     /**
@@ -97,12 +97,22 @@ class GameController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateGameRequest  $request
-     * @param  \App\Models\Game  $game
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateGameRequest $request, Game $game)
+    public function update(UpdateGameRequest $request, $id)
     {
-        //
+        $game = Game::find($id);
+        $validator = Validator::make($request->all(), [
+            'description' => 'required|string|max:10',
+            'long_description' => 'required|string|max:2000',
+            'genre' => 'required',
+            'price' => 'required|numeric|lte:1000000',
+            'image_preview' => 'mimes:jpg|max:100',
+            'trailer_video' => 'mimes:webm|max:102400'
+        ]);
+        if($validator->fails()) return redirect()->route('update_game');
+        else return redirect()->route('manage_game')->withSuccess('Game updated successfully');
     }
 
     /**

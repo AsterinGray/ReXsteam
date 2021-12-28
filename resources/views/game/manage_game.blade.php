@@ -3,6 +3,11 @@
 @section('content')
 <div class="container title p-1">
     <h4 class="fw-normal p-1">Manage Games</h4>
+    @if (Session::get('success'))
+        <div class="alert alert-success">
+            {{Session::get('success')}}
+        </div>
+    @endif
     <form action="{{route('manage_game')}}">
         <div class="row">
             <div class="col-md-3">
@@ -37,7 +42,7 @@
                     <p>{{$game->genre->name}}</p>
                 </div>
                 <div class="card-footer d-flex justify-content-evenly">
-                    <a class="btn p-0" href=""><button class="btn btn-theme float-left" type="submit"><i class="fa fa-pencil"></i>&nbsp;Update</button></a>
+                    <a class="btn p-0" href="{{route('update_game', ['gameId' => $game->id])}}"><button class="btn btn-theme float-left" type="submit"><i class="fa fa-pencil"></i>&nbsp;Update</button></a>
                     <button class="btn btn-theme float-right" data-bs-toggle="modal" data-bs-target="#delete-modal-{{$game->id}}" type="submit">
                         <i class="fa fa-trash"></i>&nbsp;Delete
                     </button>
