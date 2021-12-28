@@ -41,9 +41,10 @@ class TransactionDetailController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreTransactionDetailRequest  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTransactionDetailRequest $request)
+    public function store(StoreTransactionDetailRequest $request, $id)
     {
         //
     }
