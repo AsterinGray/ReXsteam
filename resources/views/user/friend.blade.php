@@ -1,6 +1,7 @@
 @extends('layout.main')
 @section('title', 'Friends')
 @section('content')
+@parent
 <div class="container title p-1">
     <h4 class="fw-normal p-1">Friends</h4>
     <div class="row">

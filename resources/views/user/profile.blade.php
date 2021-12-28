@@ -3,6 +3,7 @@
 @section('title', 'Profile')
 
 @section('content')
+    @parent
     <div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
         @if (Session::get('success'))
             <div class="alert alert-success">
