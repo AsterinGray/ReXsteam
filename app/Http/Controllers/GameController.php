@@ -76,8 +76,8 @@ class GameController extends Controller
             'developer' => 'required',
             'publisher' => 'required',
             'price' => 'required|numeric|max:1000000000',
-            'image_preview' => 'required|file|mimes:jpg|max:100000',
-            'trailer_video' => 'required|file|mimes:webm|max:100000000',
+            'image_preview' => 'required|file|mimes:jpg|max:100',
+            'trailer_video' => 'required|file|mimes:webm|max:102400',
         ]);
 
         $image_preview = $request->file('image_preview')->getClientOriginalName();

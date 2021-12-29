@@ -23,7 +23,7 @@ class UserController extends Controller
             'current_password' => 'nullable|required_with:password',
             'password' => 'nullable|required_with:password_confirmation|alpha_num|min:6|confirmed',
             'password_confirmation' => 'nullable|alpha_num|min:6',
-            'profile_image' => 'nullable|file|mimes:jpg,png|max:100000'
+            'profile_image' => 'nullable|file|mimes:jpg,png|max:100'
         ]);
 
         if(!$data['password']) $data['password'] = $user->password;

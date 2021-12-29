@@ -9,7 +9,7 @@
             @forelse ($games as $game)
                 <tr class="data-row">
                     <td class="py-0 col-md-2">
-                        <img src="{{ "storage/".$game->image_preview }}" alt="Image Preview" class="py-3" height="120px">
+                        <a href="{{route('game.detail', $game->id)}}"><img src="{{ "storage/".$game->image_preview }}" alt="Image Preview" class="py-3" height="120px"></a>
                     </td>
                     <td class="py-3 col-md-8">
                         <strong class="mb-0">{{ $game->title }}</strong>

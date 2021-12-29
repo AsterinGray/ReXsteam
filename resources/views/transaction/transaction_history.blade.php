@@ -10,7 +10,7 @@
           <p class="card-text mb-0">Transaction ID: {{$transaction->id}}</p>
           <p class="card-text">Purchased Date: {{$transaction->updated_at}}</p>
           @foreach ($transaction->detail as $detail)
-            <img src="{{$detail->game->image_preview}}" class="mb-2 me-2" style="width: 30%" alt="">
+            <img src="storage/{{$detail->game->image_preview}}" class="mb-2 me-2" style="width: 30%" alt="">
           @endforeach
           <p class="card-text">Total Price: <strong>Rp. {{$transaction->total_price}}</strong></p>
         </div>
