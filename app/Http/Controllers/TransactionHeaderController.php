@@ -10,6 +10,8 @@ use App\Models\TransactionDetail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 
 class TransactionHeaderController extends Controller
 {
@@ -60,10 +62,12 @@ class TransactionHeaderController extends Controller
         $user_id = Auth::user()->id;
 
         $messages = [
-            'card_number.numeric' => 'Card number must be in \'0000 0000 0000 0000\' format',
+            'expired_monty.numeric' => 'Card month must be in numeric',
+            'expired_year.numeric' => 'Card year must be in numeric',
+            'cvc.numeric' => 'Card CVV must be in numeric',
+            'postal_code.numeric' => 'ZIP must be in numeric',
             'card_country.required' => 'Card country must be selected',
             'required' => ':attribute field cannot be blank',
-            'numeric' => ':attribute must be numeric',
             'between' => ':attribute must be between :min and :max'
         ];
 
@@ -77,15 +81,33 @@ class TransactionHeaderController extends Controller
             'postal_code' => 'ZIP'
         ];
 
-        $data = $request->validate([
+        $rules = [
             'card_name' => 'required',
-            'card_number' => 'required|numeric',
+            'card_number' => 'required',
             'card_country' => 'required',
             'expired_month' => 'required|between:1,12|numeric',
             'expired_year' => 'required|between:2021,2050|numeric',
             'cvc' => 'required|numeric|between:100,9999',
             'postal_code' => 'required|numeric'
-        ], $messages, $attributes);
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages, $attributes);
+        $validator->after(function ($validator) use ($request) {
+            if($request->card_number != null &&
+            ($request->card_number[4] != ' ' ||
+            $request->card_number[9] != ' ' ||
+            $request->card_number[14] != ' ')) {
+                $validator->errors()->add('card_number', 'Card number must be in \'0000 0000 0000 0000\' format');
+                return;
+            }
+            for($i = 0; $i < strlen($request->card_number); $i++) {
+                if($i != 4 && $i != 9 && $i != 14 && !is_numeric($request->card_number[$i]))
+                    $validator->errors()->add('card_number', 'asd number must be in \'0000 0000 0000 0000\' format');
+            }
+
+        });
+
+        $validator->validate();
 
         $transaction = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'cart')->first();
         $detail = $transaction->detail;
@@ -95,13 +117,13 @@ class TransactionHeaderController extends Controller
         $total_price = $games->sum('price');
 
         $transaction->fill([
-            'card_name' => $data['card_name'],
-            'card_number' => $data['card_number'],
-            'card_country' => $data['card_country'],
-            'expired_month' => $data['expired_month'],
-            'expired_year' => $data['expired_year'],
-            'cvc' => $data['cvc'],
-            'postal_code' => $data['postal_code'],
+            'card_name' => $request->card_name,
+            'card_number' => $request->card_number,
+            'card_country' => $request->card_country,
+            'expired_month' => $request->expired_month,
+            'expired_year' => $request->expired_year,
+            'cvc' => $request->cvc,
+            'postal_code' => $request->postal_code,
             'checkout_status' => 'completed',
             'total_price' => $total_price,
         ]);
@@ -115,7 +137,7 @@ class TransactionHeaderController extends Controller
         $transactionHeader->user_id = $user_id;
         $transactionHeader->save();
 
-        return redirect()->route('receipt', ['transactionId' => $transaction->id]);
+        return redirect()->route('receipt', ['transactionId' => $transaction->id])->withErrors($validator);
     }
 
     /**
