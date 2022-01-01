@@ -15,13 +15,13 @@
                     </td>
                     <td class="py-4 col-md-10">
                         <strong>{{ $game->title }}</strong>
-                        <p>Rp. {{ $game->price }}</p>
+                        <p>Rp. {{ number_format($game->price) }}</p>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-    <p class="p-1">Total Price: <strong>Rp. {{$transaction->total_price}}</strong></p>
+    <p class="p-1">Total Price: <strong>Rp. {{number_format($transaction->total_price)}}</strong></p>
     <a href="/"><button type="button" class="btn btn-secondary">Back to Home</button></a>
 </div>
 @endsection

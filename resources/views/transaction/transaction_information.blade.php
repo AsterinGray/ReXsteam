@@ -49,7 +49,7 @@
         </div>
         <div class="row mt-3">
             <div class="col-9">
-                <p class="ps-3">Total Price: <strong>Rp. {{$total_price}}</strong></p>
+                <p class="ps-3">Total Price: <strong>Rp. {{number_format($total_price)}}</strong></p>
             </div>
             <div class="col-3">
                 <a class="btn p-0 me-2" href="/cart"><button class="btn btn-light" type="button">Cancel</button></a>

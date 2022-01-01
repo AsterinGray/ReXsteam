@@ -33,7 +33,7 @@
                 <div class="card bg-light px-2 shadow" style="width: 20rem;">
                     <div class="row no-gutters">
                         <div class="col-md-4 align-self-center me-0">
-                            <img src="{{$req->detail->profile_image}}" class="card-img">
+                            <img src="{{asset('storage/'.$req->detail->profile_image)}}" class="card-img">
                         </div>
                         <div class="col-md-8 p-0">
                             <div class="card-body">
@@ -66,7 +66,7 @@
                 <div class="card bg-light px-2 shadow" style="width: 20rem;">
                     <div class="row no-gutters">
                         <div class="col-md-4 align-self-center me-0">
-                            <img src="{{$req->detail->profile_image}}" class="card-img">
+                            <img src="{{asset('storage/'.$req->detail->profile_image)}}" class="card-img">
                         </div>
                         <div class="col-md-8 p-0">
                             <div class="card-body">
@@ -98,7 +98,7 @@
                 <div class="card bg-light px-2 shadow" style="width: 20rem;">
                     <div class="row no-gutters">
                         <div class="col-md-4 align-self-center me-0">
-                            <img src="{{$req->detail->profile_image}}" class="card-img">
+                            <img src="{{asset('storage/'.$req->detail->profile_image)}}" class="card-img">
                         </div>
                         <div class="col-md-8 p-0">
                             <div class="card-body">
