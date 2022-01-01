@@ -19,7 +19,7 @@ class CreateGamesTable extends Migration
             $table->string('image_preview');
             $table->string('trailer_video');
             $table->string('description');
-            $table->string('long_description');
+            $table->text('long_description');
             $table->foreignId('genre_id');
             $table->foreign('genre_id')->references('id')->on('genres')->onDelete('cascade');
             $table->datetime('release_date');

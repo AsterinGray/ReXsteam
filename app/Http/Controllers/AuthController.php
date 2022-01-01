@@ -55,6 +55,7 @@ class AuthController extends Controller
 
     public function logout() {
         Auth::logout();
+        Cookie::forget('age');
         return redirect()->route('login');
     }
 }
