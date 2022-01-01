@@ -17,6 +17,7 @@ class AuthController extends Controller
     }
 
     public function loginAction(Request $request) {
+        Cookie::queue(Cookie::forget('age'));
         $credentials = $request->validate([
             'username' => 'required|exists:users,username',
             'password' => 'required',
@@ -55,7 +56,7 @@ class AuthController extends Controller
 
     public function logout() {
         Auth::logout();
-        Cookie::forget('age');
+        Cookie::queue(Cookie::forget('age'));
         return redirect()->route('login');
     }
 }
