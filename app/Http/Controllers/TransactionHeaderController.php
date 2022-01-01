@@ -102,7 +102,7 @@ class TransactionHeaderController extends Controller
             }
             for($i = 0; $i < strlen($request->card_number); $i++) {
                 if($i != 4 && $i != 9 && $i != 14 && !is_numeric($request->card_number[$i]))
-                    $validator->errors()->add('card_number', 'asd number must be in \'0000 0000 0000 0000\' format');
+                    $validator->errors()->add('card_number', 'Card number must be in \'0000 0000 0000 0000\' format');
             }
 
         });

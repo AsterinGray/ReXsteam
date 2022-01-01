@@ -38,13 +38,15 @@
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <h5>Buy {{$game->title}}</h5>
-                            <form action="{{route('game.add', ['id' => $game->id])}}" enctype="multipart/form-data">
-                                @csrf
-                                <button type="submit" class="btn btn-primary">Add to Cart | Rp. {{number_format($game->price)}}</button>
-                            </form>
+                            @if (!$owned)
+                                <form action="{{route('game.add', ['id' => $game->id])}}" enctype="multipart/form-data">
+                                    @csrf
+                                    <button type="submit" class="btn btn-primary">Add to Cart | Rp. {{number_format($game->price)}}</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
-                </div>  
+                </div>
             @endif
         @endauth
         <div>

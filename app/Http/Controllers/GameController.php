@@ -102,7 +102,18 @@ class GameController extends Controller
     public function show($id)
     {
         $game = Game::find($id);
-        return view('game.show', compact('game'));
+        $user_id = Auth::user()->id;
+        $transactions = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'completed')->get();
+        $owned = false;
+        foreach($transactions as $transaction) {
+            foreach($transaction->detail as $detail) {
+                if($detail->game->id == $id) {
+                    $owned = true;
+                    break;
+                }
+            }
+        }
+        return view('game.show', compact('game', 'owned'));
     }
 
     public function addToCart($id) {
