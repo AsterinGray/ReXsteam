@@ -32,23 +32,19 @@
                 <p><b>Publisher: </b>{{$game->publisher}}</p>
             </div>
         </div>
-        @auth
-            @if (Auth::user()->role == "member")
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5>Buy {{$game->title}}</h5>
-                            @if (!$owned)
-                                <form action="{{route('game.add', ['id' => $game->id])}}" enctype="multipart/form-data">
-                                    @csrf
-                                    <button type="submit" class="btn btn-primary">Add to Cart | Rp. {{number_format($game->price)}}</button>
-                                </form>
-                            @endif
-                        </div>
-                    </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5>Buy {{$game->title}}</h5>
+                    @if (!$owned)
+                        <form action="{{route('game.add', ['id' => $game->id])}}" enctype="multipart/form-data">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Add to Cart | Rp. {{number_format($game->price)}}</button>
+                        </form>
+                    @endif
                 </div>
-            @endif
-        @endauth
+            </div>
+        </div>
         <div>
             <h1>About This Game</h1>
             <p>{{$game->long_description}}</p>
