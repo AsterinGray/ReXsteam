@@ -47,11 +47,13 @@ class AuthController extends Controller
         $data['password'] = Hash::make($request->password);
         $user = User::create($data);
 
+        Auth::login($user);
+
         $transactionHeader = new TransactionHeader();
         $transactionHeader->user_id = $user->id;
         $transactionHeader->save();
 
-        return redirect()->route('login')->withSuccess('Account Registered');
+        return redirect()->route('index')->withSuccess('Account Registered');
     }
 
     public function logout() {

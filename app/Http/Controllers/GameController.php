@@ -4,14 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Game;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreGameRequest;
-use App\Http\Requests\UpdateGameRequest;
 use App\Models\Genre;
 use App\Models\TransactionDetail;
 use App\Models\TransactionHeader;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Validation\Rule;
 
 class GameController extends Controller
 {
@@ -105,13 +101,16 @@ class GameController extends Controller
         $owned = false;
         
         if(Auth::user()) {
-            $user_id = Auth::user()->id;
-            $transactions = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'completed')->get();
-            foreach($transactions as $transaction) {
-                foreach($transaction->detail as $detail) {
-                    if($detail->game->id == $id) {
-                        $owned = true;
-                        break;
+            if(Auth::user()->role == 'admin') $owned = true;
+            else {
+                $user_id = Auth::user()->id;
+                $transactions = TransactionHeader::where('user_id', $user_id)->where('checkout_status', 'completed')->get();
+                foreach($transactions as $transaction) {
+                    foreach($transaction->detail as $detail) {
+                        if($detail->game->id == $id) {
+                            $owned = true;
+                            break;
+                        }
                     }
                 }
             }
